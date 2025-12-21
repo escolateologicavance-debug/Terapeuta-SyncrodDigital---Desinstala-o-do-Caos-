@@ -30,44 +30,7 @@ button { width: 100%; padding: 16px; font-size: 1.1em; font-weight: bold; border
 </head>
 <body>
   <script>
-const idsAutorizados = [
-  "d72bfcc0-17ae-4973-8036-f5c759965a8a", 
-  "LIBERAR-OUTRO-ID"
-];
-
-const seuWhatsApp = "5566999390173"; 
-
-(function () {
-  const KEY = "synkro_device_id";
-  let deviceId = localStorage.getItem(KEY);
-  if (!deviceId) {
-    deviceId = crypto.randomUUID();
-    localStorage.setItem(KEY, deviceId);
-  }
-  const estaAutorizado = idsAutorizados.includes(deviceId);
-  window.onload = function() {
-    if (!estaAutorizado) {
-      document.body.innerHTML = `
-        <div style="padding:50px 20px; text-align:center; font-family:sans-serif; background:#fff; height:100vh;">
-          <h2 style="color:#0b3c5d">Acesso Restrito</h2>
-          <p>Olá! Para ativar seu <b>Terapeuta Digital</b>, clique no botão abaixo.</p>
-          <div style="background:#f8f9fa; padding:15px; margin:20px 0; font-size:0.7em; border:1px solid #ddd;">
-            ID DO SEU APARELHO:<br><strong>\${deviceId}</strong>
-          </div>
-          <button onclick="enviarAtivacao('\${deviceId}')" 
-            style="padding:18px; background:#16a085; color:#fff; border:none; border-radius:15px; font-weight:bold; width:100%; font-size:1.1em; cursor:pointer;">
-            Ativar via WhatsApp Business
-          </button>
-        </div>`;
-    }
-  };
-})();
-
-function enviarAtivacao(id) {
-  const texto = encodeURIComponent("Olá Gilberto! Gostaria de ativar meu acesso.\nID: " + id);
-  window.location.href = "https://wa.me/" + seuWhatsApp + "?text=" + texto;
-}
-</script>
+co
 
 
 <div class="container">
