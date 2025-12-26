@@ -487,8 +487,10 @@ function msg(c) {
   d.innerHTML = `<strong>Orientação Clínica:</strong><br>${suporte[c].t}<br><span class="texto-biblico">"${suporte[c].v}"<br>(${suporte[c].b})</span>`;
 }
 <script>
+// 1. Definição das perguntas da calculadora
 const qs = ["Nível de estresse","Qualidade do sono","Foco mental","Motivação","Equilíbrio emocional","Esperança","Autocontrole","Bem-estar geral"];
 
+// 2. Funções de Navegação (Faz os botões trocarem de tela)
 function irPara(id) {
   document.querySelectorAll('#plano-recepcao,#plano-autoavaliacao,#plano-resultado,#plano-conteudo,#plano-crises').forEach(e => e.style.display = 'none');
   const alvo = document.getElementById(id);
@@ -496,6 +498,7 @@ function irPara(id) {
   if (id === 'plano-autoavaliacao') gerarQuestoes();
 }
 
+// 3. Lógica da Calculadora (Gera as perguntas e calcula o resultado)
 function gerarQuestoes() {
   const container = document.getElementById('questoes');
   if (container) {
@@ -510,35 +513,41 @@ function verResultado() {
   const notas = document.querySelectorAll('.nota');
   let soma = 0;
   notas.forEach(n => soma += Number(n.value));
-  const media = (soma / notas.length).toFixed(1);
-  const score = Math.round(media * 100);
+  const media = (soma / qs.length).toFixed(1);
+  const score = Math.round(media * 10); 
   
   document.getElementById('v-mc').innerText = media;
   document.getElementById('v-sc').innerText = score;
   
-  // Move o ponteiro
+  // Faz o ponteiro girar
   const angulo = -180 + (media * 18);
-  document.getElementById('ptr-vivo').style.transform = `rotate(${angulo}deg)`;
+  const ponteiro = document.getElementById('ptr-vivo');
+  if(ponteiro) ponteiro.style.transform = `rotate(${angulo}deg)`;
   
   irPara('plano-resultado');
 }
 
-// Funções de suporte que estavam faltando
+// 4. Suporte Emocional e Conselhos
 function mostrarConselho() {
   const d = document.getElementById('cx-conselho');
   d.style.display = 'block';
-  d.innerHTML = "<strong>Conselho do Dia:</strong><br>Aquietai-vos e sabei que Eu Sou Deus. A Qualificação do Estar começa na confiança.";
+  d.innerHTML = "<strong>Conselho do Dia:</strong><br>Aquietai-vos e sabei que Eu Sou Deus. A Qualificação do Estar começa na confiança e na ordem.";
 }
 
 function msg(c) {
   const d = document.getElementById('cx-suporte');
   d.style.display = 'block';
-  d.innerHTML = `<strong>Orientação:</strong><br>Busque o equilíbrio através da Sincrologia.`;
+  // Aqui você pode expandir as mensagens depois
+  d.innerHTML = `<strong>Orientação Clínica:</strong><br>O Método SINCRO foca na sua Qualificação do Estar presente. Busque a paz que excede todo o entendimento.`;
 }
 
+// 5. Inicialização e Registro do App (PWA)
 window.onload = () => irPara('plano-recepcao');
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js');
+  navigator.serviceWorker.register('./sw.js').catch(err => console.log("Erro no App:", err));
 }
 </script>
+ 
+</body>
+</html>
