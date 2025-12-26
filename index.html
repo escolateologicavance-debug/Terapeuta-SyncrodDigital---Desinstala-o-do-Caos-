@@ -467,25 +467,7 @@ const frasesConselho = [
   "O fim de todas as coisas está próximo; sede equilibrados. - 1 Pedro 4:7"
 ];
 
-function irPara(id) {
-  ['plano-recepcao','plano-autoavaliacao','plano-resultado','plano-conteudo','plano-crises'].forEach(p => {
-    document.getElementById(p).style.display='none';
-  });
-  document.getElementById(id).style.display='block';
-}
-
-function mostrarConselho() {
-  const d = document.getElementById('cx-conselho');
-  const r = Math.floor(Math.random() * frasesConselho.length);
-  d.style.display = 'block';
-  d.innerHTML = `<strong>Conselho do Dia:</strong><br>${frasesConselho[r]}`;
-}
-
-function msg(c) {
-  const d = document.getElementById('cx-suporte');
-  d.style.display = 'block';
-  d.innerHTML = `<strong>Orientação Clínica:</strong><br>${suporte[c].t}<br><span class="texto-biblico">"${suporte[c].v}"<br>(${suporte[c].b})</span>`;
-}
+ 
 <script>
 // 1. Definição das perguntas da calculadora
 const qs = ["Nível de estresse","Qualidade do sono","Foco mental","Motivação","Equilíbrio emocional","Esperança","Autocontrole","Bem-estar geral"];
