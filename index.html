@@ -486,43 +486,18 @@ function msg(c) {
   d.style.display = 'block';
   d.innerHTML = `<strong>Orientação Clínica:</strong><br>${suporte[c].t}<br><span class="texto-biblico">"${suporte[c].v}"<br>(${suporte[c].b})</span>`;
 }
-
-function init() {
-  const qs = [
-    "Q1 – Organização do Ambiente:",
-    "Q2 – Cumprimento da Agenda:",
-    "Q3 – Postura Diante de Problema:",
-    "Q4 – Pausa antes de Reagir:",
-    "Q5 – Nível de Ansiedade:",
-    "Q6 – Nível de Paz Interna:",
-    "Q7 – Estrutura Emocional:",
-    "Q8 – Nível do Humor Atual"
-  ];
-  const container = document.getElementById('questoes');
-  if(container) {
-    container.innerHTML = ""; 
-    qs.forEach(q => {
-      container.innerHTML += `<div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #eee;align-items:center;text-align:left;"><span style="flex:1;padding-right:10px;">${q}</span><input type="number" class="nota" min="0" max="10" maxlength="2" placeholder="0" oninput="if(value.length > 2) value = value.slice(0, 2); if(value > 10) value = 10; if(value < 0) value = 0;" style="width:50px;text-align:center;border-radius:5px;border:1px solid #ccc;padding:5px;font-weight:bold;"></div>`;
-    });
-  }
-}
-
-function verResultado() {
-  let s = 0; 
-  const ns = document.querySelectorAll('.nota');
-  for(let n of ns) { 
-    let v = parseFloat(n.value || 0);
-    if(v > 10) v = 10;
-    s += v; 
-  }
-  const sc = Math.round((s / 80) * 1000);
-  irPara('plano-resultado');
-  document.getElementById('v-sc').innerText = sc;
-  document.getElementById('v-mc').innerText = (sc/100).toFixed(1);
-  const ang = -180 + (sc/1000 * 180);
-  setTimeout(() => { document.getElementById('ptr-vivo').style.transform = `rotate(${ang}deg)`; }, 200);
-
 <script>
+const qs = [
+  "Nível de estresse",
+  "Qualidade do sono",
+  "Foco mental",
+  "Motivação",
+  "Equilíbrio emocional",
+  "Esperança",
+  "Autocontrole",
+  "Bem-estar geral"
+];
+
 function irPara(id) {
   document.querySelectorAll(
     '#plano-recepcao,#plano-autoavaliacao,#plano-resultado,#plano-conteudo,#plano-crises'
@@ -533,18 +508,25 @@ function irPara(id) {
 }
 
 function init() {
+  const container = document.getElementById('questoes');
+  if (container) {
+    container.innerHTML = "";
+    qs.forEach(q => {
+      container.innerHTML += `
+        <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #eee;">
+          <span>${q}</span>
+          <input type="number" class="nota" min="0" max="10">
+        </div>`;
+    });
+  }
   irPara('plano-recepcao');
 }
-</script>
-<script>
+
 window.onload = init;
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js')
-    .then(reg => console.log('Service Worker registrado:', reg.scope))
-    .catch(err => console.error('Erro no Service Worker:', err));
+  navigator.serviceWorker.register('./sw.js');
 }
 </script>
 </body>
 </html>
-      
