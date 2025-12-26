@@ -521,8 +521,21 @@ function verResultado() {
   document.getElementById('v-mc').innerText = (sc/100).toFixed(1);
   const ang = -180 + (sc/1000 * 180);
   setTimeout(() => { document.getElementById('ptr-vivo').style.transform = `rotate(${ang}deg)`; }, 200);
+
+<script>
+function irPara(id) {
+  document.querySelectorAll(
+    '#plano-recepcao,#plano-autoavaliacao,#plano-resultado,#plano-conteudo,#plano-crises'
+  ).forEach(e => e.style.display = 'none');
+
+  const alvo = document.getElementById(id);
+  if (alvo) alvo.style.display = 'block';
 }
 
+function init() {
+  irPara('plano-recepcao');
+}
+</script>
 <script>
 window.onload = init;
 
