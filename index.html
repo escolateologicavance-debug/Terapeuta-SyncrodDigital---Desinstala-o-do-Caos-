@@ -467,12 +467,9 @@ const frasesConselho = [
   "O fim de todas as coisas está próximo; sede equilibrados. - 1 Pedro 4:7"
 ];
 
- 
 <script>
-// Lista de perguntas da calculadora
 const qs = ["Nível de estresse","Qualidade do sono","Foco mental","Motivação","Equilíbrio emocional","Esperança","Autocontrole","Bem-estar geral"];
 
-// Faz as telas trocarem e gera as perguntas
 function irPara(id) {
   document.querySelectorAll('#plano-recepcao,#plano-autoavaliacao,#plano-resultado,#plano-conteudo,#plano-crises').forEach(e => {
     if(e) e.style.display = 'none';
@@ -480,49 +477,50 @@ function irPara(id) {
   const alvo = document.getElementById(id);
   if (alvo) {
     alvo.style.display = 'block';
+    // É aqui que o botão "ganha vida" e abre as perguntas
     if (id === 'plano-autoavaliacao') gerarQuestoes();
   }
 }
 
-// Constrói o simulador na tela
 function gerarQuestoes() {
   const container = document.getElementById('questoes');
   if (container) {
     container.innerHTML = "";
-    qs.forEach(q => {
+    qs.forEach((q, i) => {
+      // Cria os IDs q1, q2... conforme seu método
       container.innerHTML += `<div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #eee;">
         <span>${q}</span>
-        <input type="number" class="nota" min="0" max="10" value="5">
+        <input type="number" id="q${i+1}" class="nota" min="0" max="10" value="5">
       </div>`;
     });
   }
 }
 
-// Calcula o Score e move o ponteiro
 function verResultado() {
-  const notas = document.querySelectorAll('.nota');
-  let soma = 0;
-  notas.forEach(n => soma += Number(n.value));
-  const media = (soma / qs.length).toFixed(1);
-  const score = Math.round(media * 10); 
+  let somaTotal = 0;
+  for (let i = 1; i <= 8; i++) {
+    const campo = document.getElementById(`q${i}`);
+    if(campo) somaTotal += Number(campo.value);
+  }
   
-  if(document.getElementById('v-mc')) document.getElementById('v-mc').innerText = media;
-  if(document.getElementById('v-sc')) document.getElementById('v-sc').innerText = score;
+  // Sua lógica: 80 pontos max * 12.5 = 1000 (Score Centenal)
+  const scoreCentenal = somaTotal * 12.5;
+  const notaMC = scoreCentenal / 100;
   
-  const angulo = -180 + (media * 18);
+  if(document.getElementById('v-mc')) document.getElementById('v-mc').innerText = notaMC.toFixed(1);
+  if(document.getElementById('v-sc')) document.getElementById('v-sc').innerText = Math.round(scoreCentenal);
+  
+  // Gira o ponteiro baseado no seu score de 0 a 1000
   const ponteiro = document.getElementById('ptr-vivo');
-  if(ponteiro) ponteiro.style.transform = `rotate(${angulo}deg)`;
+  if(ponteiro) {
+    const angulo = (scoreCentenal / 1000) * 180;
+    ponteiro.style.transform = `rotate(${angulo - 180}deg)`;
+  }
   
   irPara('plano-resultado');
 }
 
-// Inicia o App
 window.onload = () => irPara('plano-recepcao');
-
-// Registra o App (PWA)
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js');
-}
 </script>
 </body>
 </html>
