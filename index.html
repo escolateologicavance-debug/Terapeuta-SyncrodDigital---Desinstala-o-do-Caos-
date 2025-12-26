@@ -487,46 +487,58 @@ function msg(c) {
   d.innerHTML = `<strong>Orientação Clínica:</strong><br>${suporte[c].t}<br><span class="texto-biblico">"${suporte[c].v}"<br>(${suporte[c].b})</span>`;
 }
 <script>
-const qs = [
-  "Nível de estresse",
-  "Qualidade do sono",
-  "Foco mental",
-  "Motivação",
-  "Equilíbrio emocional",
-  "Esperança",
-  "Autocontrole",
-  "Bem-estar geral"
-];
+const qs = ["Nível de estresse","Qualidade do sono","Foco mental","Motivação","Equilíbrio emocional","Esperança","Autocontrole","Bem-estar geral"];
 
 function irPara(id) {
-  document.querySelectorAll(
-    '#plano-recepcao,#plano-autoavaliacao,#plano-resultado,#plano-conteudo,#plano-crises'
-  ).forEach(e => e.style.display = 'none');
-
+  document.querySelectorAll('#plano-recepcao,#plano-autoavaliacao,#plano-resultado,#plano-conteudo,#plano-crises').forEach(e => e.style.display = 'none');
   const alvo = document.getElementById(id);
   if (alvo) alvo.style.display = 'block';
+  if (id === 'plano-autoavaliacao') gerarQuestoes();
 }
 
-function init() {
+function gerarQuestoes() {
   const container = document.getElementById('questoes');
   if (container) {
     container.innerHTML = "";
     qs.forEach(q => {
-      container.innerHTML += `
-        <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #eee;">
-          <span>${q}</span>
-          <input type="number" class="nota" min="0" max="10">
-        </div>`;
+      container.innerHTML += `<div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #eee;"><span>${q}</span><input type="number" class="nota" min="0" max="10" value="5"></div>`;
     });
   }
-  irPara('plano-recepcao');
 }
 
-window.onload = init;
+function verResultado() {
+  const notas = document.querySelectorAll('.nota');
+  let soma = 0;
+  notas.forEach(n => soma += Number(n.value));
+  const media = (soma / notas.length).toFixed(1);
+  const score = Math.round(media * 100);
+  
+  document.getElementById('v-mc').innerText = media;
+  document.getElementById('v-sc').innerText = score;
+  
+  // Move o ponteiro
+  const angulo = -180 + (media * 18);
+  document.getElementById('ptr-vivo').style.transform = `rotate(${angulo}deg)`;
+  
+  irPara('plano-resultado');
+}
+
+// Funções de suporte que estavam faltando
+function mostrarConselho() {
+  const d = document.getElementById('cx-conselho');
+  d.style.display = 'block';
+  d.innerHTML = "<strong>Conselho do Dia:</strong><br>Aquietai-vos e sabei que Eu Sou Deus. A Qualificação do Estar começa na confiança.";
+}
+
+function msg(c) {
+  const d = document.getElementById('cx-suporte');
+  d.style.display = 'block';
+  d.innerHTML = `<strong>Orientação:</strong><br>Busque o equilíbrio através da Sincrologia.`;
+}
+
+window.onload = () => irPara('plano-recepcao');
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./sw.js');
 }
 </script>
-</body>
-</html>
