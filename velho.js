@@ -4,7 +4,8 @@ const assets = [
   './index.html',
   './avatar.jpg',
   './manifest.json',
-  './velho.js'
+  './velho.js',
+  './calculadora-sc.js'
 ];
 
 self.addEventListener('install', e => {
