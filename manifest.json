@@ -1,24 +1,23 @@
 {
-  "name": "Terapeuta Digital - Método SINCRO",
+  "name": "Terapeuta Digital",
   "short_name": "Terapeuta",
-  "description": "Suporte Emocional e Qualificação do Estar",
+  "description": "Gestão Emocional de Alta Performance",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f8f9fa",
-  "theme_color": "#0b3c5d",
+  "background_color": "#e6e6e6",
+  "theme_color": "#2f9e8f",
+  "orientation": "portrait",
   "icons": [
     {
-      "src": "avatar.png",
+      "src": "avatar-192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     },
     {
-      "src": "avatar.png",
+      "src": "avatar-512.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     }
   ]
 }
