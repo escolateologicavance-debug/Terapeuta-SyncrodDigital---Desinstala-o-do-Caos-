@@ -2,7 +2,7 @@ const cacheName = 'terapeuta-sincro-v6';
 const assets = [
   './',
   './index.html',
-  './avatar.jpg',
+  './avatar.png',
   './manifest.json',
   './velho.js',
   './calculadora-sc.js'
