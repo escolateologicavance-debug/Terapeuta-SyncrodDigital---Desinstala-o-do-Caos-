@@ -3,7 +3,7 @@ const assets = [
   './',
   './index.html',
   './avatar.jpg',
-  './manifest.js',
+  './manifest.json',
   './velho.js'
 ];
 
